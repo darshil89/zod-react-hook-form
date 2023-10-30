@@ -2,7 +2,6 @@
 import { z, ZodType } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { error } from "console";
 
 type FormData = {
   firstName: string;

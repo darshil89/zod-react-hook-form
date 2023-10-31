@@ -1,50 +1,34 @@
 "use client";
-import { z, ZodType } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-type FormData = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  age: number;
-  password: string;
-  confirmPassword: string;
-};
-
+import { FormDataSchema } from "../../lib/types";
+import { schema } from "@/models/schema";
+import { addEntry } from "../actions";
 const Signup = () => {
-  const schema: ZodType<FormData> = z
-    .object({
-      firstName: z.string().min(2, "min length should be 2").max(30),
-      lastName: z.string().min(2, "min length should be 2").max(30),
-      email: z.string().email(),
-      age: z.number().min(18).max(70),
-      password: z.string().min(8).max(100),
-      confirmPassword: z.string().min(8).max(100),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-      message: "Passwords do not match",
-      path: ["confirmPassword"],
-    }).refine((data) => {
-      if (typeof data.email === "string") {
-        return data.email.endsWith("@gmail.com");
-      }
-      return false;
-    }, {
-      message: "Your email should be gmail",
-      path: ["email"],
-    })
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<FormDataSchema>({
     resolver: zodResolver(schema),
   });
 
-  const submitData = (data: FormData) => {
-    console.log(data);
+  const submitData = async (data: FormDataSchema) => {
+    const res = await addEntry(data);
+
+    if (!res) {
+      alert("Something went wrong, please try again");
+      return;
+    }
+
+    if (res.error) {
+      alert(res.error.message);
+      return;
+    }
+    if (res.data) {
+      alert("Success! You have signed up!");
+      console.log("response from backend", res.data);
+    }
   };
   return (
     <div className="flex flex-col items-center justify-center  h-screen">

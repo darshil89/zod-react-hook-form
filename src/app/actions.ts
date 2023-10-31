@@ -9,7 +9,7 @@ type Inputs = z.infer<typeof schema>;
 export async function addEntry(data: Inputs) {
 
     try {
-        const result = await schema.safeParseAsync(data);
+        const result =  schema.safeParse(data);
 
         if (result.success) {
             await connectToDB();

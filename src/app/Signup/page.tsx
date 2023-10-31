@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormDataSchema } from "../../lib/types";
 import { schema } from "@/models/schema";
 import { addEntry } from "../actions";
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 const Signup = () => {
   
   const {

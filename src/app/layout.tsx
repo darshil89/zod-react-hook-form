@@ -1,22 +1,25 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
+import type { Metadata } from "next";
 
-const inter = Inter({ subsets: ['latin'] })
-
+import "./globals.css";
+import Toaster from "@/context/Toaster";
 export const metadata: Metadata = {
-  title: 'ZOD',
-  description: 'ZOD is a Next.js starter kit with batteries included.',
-}
+  title: "ZOD",
+  description: "ZOD is a Next.js starter kit with batteries included.",
+};
+
+
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body>
+        {children}
+        <Toaster children={children} />
+      </body>
     </html>
-  )
+  );
 }

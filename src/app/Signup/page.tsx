@@ -4,31 +4,25 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormDataSchema } from "../../lib/types";
 import { schema } from "@/models/schema";
 import { addEntry } from "../actions";
+import { ToastContainer, toast } from 'react-toastify';
 const Signup = () => {
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormDataSchema>({
     resolver: zodResolver(schema),
   });
 
   const submitData = async (data: FormDataSchema) => {
+    toast.info("Signing up...");
     const res = await addEntry(data);
+    if (res.success) toast.success("Credentials sent successfully!");
+    else toast.error("Something went wrong!");
 
-    if (!res) {
-      alert("Something went wrong, please try again");
-      return;
-    }
-
-    if (res.error) {
-      alert(res.error.message);
-      return;
-    }
-    if (res.data) {
-      alert("Success! You have signed up!");
-      console.log("response from backend", res.data);
-    }
+    reset();
   };
   return (
     <div className="flex flex-col items-center justify-center  h-screen">
@@ -107,6 +101,7 @@ const Signup = () => {
             Sign Up
           </button>
         </div>
+        
       </form>
     </div>
   );

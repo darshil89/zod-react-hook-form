@@ -15,8 +15,8 @@ type FormData = {
 const Signup = () => {
   const schema: ZodType<FormData> = z
     .object({
-      firstName: z.string().min(2).max(30),
-      lastName: z.string().min(2).max(30),
+      firstName: z.string().min(2, "min length should be 2").max(30),
+      lastName: z.string().min(2, "min length should be 2").max(30),
       email: z.string().email(),
       age: z.number().min(18).max(70),
       password: z.string().min(8).max(100),
@@ -25,7 +25,15 @@ const Signup = () => {
     .refine((data) => data.password === data.confirmPassword, {
       message: "Passwords do not match",
       path: ["confirmPassword"],
-    });
+    }).refine((data) => {
+      if (typeof data.email === "string") {
+        return data.email.endsWith("@gmail.com");
+      }
+      return false;
+    }, {
+      message: "Your email should be gmail",
+      path: ["email"],
+    })
 
   const {
     register,
@@ -42,21 +50,19 @@ const Signup = () => {
     <div className="flex flex-col items-center justify-center  h-screen">
       <form onSubmit={handleSubmit(submitData)} className="w-96">
         <div className="flex flex-col w-full mb-4">
-         
           <input
             className="border border-slate-600 rounded p-2"
             placeholder="First Name"
             type="text"
-            {...register("firstName" , { required: 'Name is required' })}
+            {...register("firstName")}
           />
           {errors.firstName && (
             <span className="text-red-400">{errors.firstName.message}</span>
           )}
         </div>
         <div className="flex flex-col w-full mb-4">
-          
           <input
-            placeholder="Last Name" 
+            placeholder="Last Name"
             className="border border-slate-600 rounded p-2"
             type="text"
             {...register("lastName")}
@@ -72,6 +78,7 @@ const Signup = () => {
             placeholder="Email"
             {...register("email")}
           />
+
           {errors.email && (
             <span className="text-red-400">{errors.email.message}</span>
           )}

@@ -42,9 +42,10 @@ const Signup = () => {
     <div className="flex flex-col items-center justify-center  h-screen">
       <form onSubmit={handleSubmit(submitData)} className="w-96">
         <div className="flex flex-col w-full mb-4">
-          <label className="font-semibold">First Name:</label>
+         
           <input
-            className="border border-slate-600 rounded"
+            className="border border-slate-600 rounded p-2"
+            placeholder="First Name"
             type="text"
             {...register("firstName")}
           />
@@ -53,9 +54,10 @@ const Signup = () => {
           )}
         </div>
         <div className="flex flex-col w-full mb-4">
-          <label className="font-semibold">Last Name:</label>
+          
           <input
-            className="border border-slate-600 rounded"
+            placeholder="Last Name" 
+            className="border border-slate-600 rounded p-2"
             type="text"
             {...register("lastName")}
           />
@@ -64,10 +66,10 @@ const Signup = () => {
           )}
         </div>
         <div className="flex flex-col w-full mb-4">
-          <label className="font-semibold">Email:</label>
           <input
-            className="border border-slate-600 rounded"
+            className="border border-slate-600 rounded p-2"
             type="text"
+            placeholder="Email"
             {...register("email")}
           />
           {errors.email && (
@@ -75,10 +77,10 @@ const Signup = () => {
           )}
         </div>
         <div className="flex flex-col w-full mb-4">
-          <label className="font-semibold">Age</label>
           <input
-            className="border border-slate-600 rounded"
+            className="border border-slate-600 rounded p-2"
             type="number"
+            placeholder="Age"
             {...register("age", { valueAsNumber: true })}
           />
           {errors.age && (
@@ -86,17 +88,17 @@ const Signup = () => {
           )}
         </div>
         <div className="flex flex-col w-full mb-4">
-          <label className="font-semibold">Password:</label>
           <input
-            className="border border-slate-600 rounded"
+            className="border border-slate-600 rounded p-2"
             type="password"
+            placeholder="Password"
             {...register("password")}
           />
         </div>
         <div className="flex flex-col w-full mb-4">
-          <label className="font-semibold">Confirm Password:</label>
           <input
-            className="border border-slate-600 rounded"
+            className="border border-slate-600 rounded p-2"
+            placeholder="Confirm Password"
             type="password"
             {...register("confirmPassword")}
           />

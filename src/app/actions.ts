@@ -7,24 +7,22 @@ import { connectToDB } from '@/models/db';
 type Inputs = z.infer<typeof schema>;
 
 export async function addEntry(data: Inputs) {
-
     const result = await schema.safeParseAsync(data);
 
     if (result.success) {
         await connectToDB();
         const user = await prisma.user.create({
-            data: {
+            data: { 
                 firstName: result.data.firstName,
                 lastName: result.data.lastName,
                 email: result.data.email,
                 age: result.data.age,
+               
             },
-        });
-        return { success: true, data: user };
+        })
+        return { success: true, data: user }
     } else {
-        return { success: false, errors: result.error };
+        console.log(result.error);
+        return { success: false, error: result.error}
     }
-
-
-
 }

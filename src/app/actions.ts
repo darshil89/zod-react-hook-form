@@ -17,8 +17,6 @@ export async function addEntry(data: Inputs) {
                 lastName: result.data.lastName,
                 email: result.data.email,
                 age: result.data.age,
-                password: result.data.password,
-                confirmPassword: result.data.confirmPassword,
             },
         })
         return { success: true, data: user }

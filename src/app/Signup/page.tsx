@@ -47,7 +47,7 @@ const Signup = () => {
             className="border border-slate-600 rounded p-2"
             placeholder="First Name"
             type="text"
-            {...register("firstName")}
+            {...register("firstName" , { required: 'Name is required' })}
           />
           {errors.firstName && (
             <span className="text-red-400">{errors.firstName.message}</span>

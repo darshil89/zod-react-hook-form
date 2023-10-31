@@ -4,9 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormDataSchema } from "../../lib/types";
 import { schema } from "@/models/schema";
 import { addEntry } from "../actions";
-import {  toast } from 'react-toastify';
+import { toast } from "react-toastify";
 const Signup = () => {
-  
   const {
     register,
     handleSubmit,
@@ -19,6 +18,11 @@ const Signup = () => {
   const submitData = async (data: FormDataSchema) => {
     toast.info("Signing up...");
     const res = await addEntry(data);
+
+    if (res.error) {
+      console.log(res.error);
+      toast.error("Something went wrong!");
+    }
     if (res.success) toast.success("Credentials sent successfully!");
     else toast.error("Something went wrong!");
 
@@ -101,7 +105,6 @@ const Signup = () => {
             Sign Up
           </button>
         </div>
-        
       </form>
     </div>
   );
